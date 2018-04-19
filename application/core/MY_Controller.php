@@ -11,7 +11,7 @@ class MY_Controller extends CI_Controller
     function call($method, $url, $header, $params = array())
     {
         $options = array(
-            CURLOPT_HEADER         => 1,
+            CURLOPT_HEADER         => 0,
             CURLOPT_URL            => $url,
             CURLOPT_RETURNTRANSFER => 1,
             CURLOPT_TIMEOUT        => 120,
