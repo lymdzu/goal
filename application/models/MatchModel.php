@@ -18,4 +18,14 @@ class MatchModel extends MY_Model
         $query = $this->db->get("league");
         return $query->result_array();
     }
+
+    public function insert_teams($league, $sub_league, $team_code, $full_name, $eng_name, $yue_name)
+    {
+        $status = $this->db->insert("t_teams", array("team_code" => $team_code, "full_name" => $full_name, "eng_name" => $eng_name, "yue_name" => $yue_name, "league" => $league, "sub_league" => $sub_league));
+        if ($status && $this->db->affected_rows() > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
