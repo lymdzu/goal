@@ -28,4 +28,75 @@ class MatchModel extends MY_Model
             return false;
         }
     }
+
+    /**
+     *
+     * @param $team_id
+     * @return mixed
+     * @author liuyongming@shopex.cn
+     */
+    public function get_team_by_id($team_id)
+    {
+        $this->db->where("team_code", $team_id);
+        $query = $this->db->get("t_teams");
+        return $query->row_array();
+    }
+
+    /**
+     *
+     * @param $match_code
+     * @param $match_name
+     * @param $league
+     * @param $season
+     * @param $match_time
+     * @param $host
+     * @param $guest
+     * @param $total_score
+     * @param $half_score
+     * @param $host_rank
+     * @param $guest_rank
+     * @param $total_conced
+     * @param $half_conced
+     * @param $total_sum
+     * @param $half_sum
+     * @param $turn
+     * @return bool
+     * @author liuyongming@shopex.cn
+     */
+    public function insert_match($match_code, $match_name, $league, $season, $match_time, $host, $guest, $total_score, $half_score, $host_rank, $guest_rank, $total_conced, $half_conced, $total_sum, $half_sum, $turn, $time)
+    {
+        $status = $this->db->insert("t_score", array("match_id" => $match_code, "match_name" => $match_name, "host_team" => $host, "guest_team" => $guest, "match_time" => $match_time, "league" => $league, "status" => $season, "total_score" => $total_score, "half_score" => $half_score, "host_rank" => $host_rank, "guest_rank" => $guest_rank, "total_conced" => $total_conced, "half_conced" => $half_conced, "total_sum" => $total_sum, "half_sum" => $half_sum, "turn" => $turn, "time" => $time));
+        if ($status && $this->db->affected_rows() > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
+    public function update_match($match_code, $match_name, $league, $season, $match_time, $host, $guest, $total_score, $half_score, $host_rank, $guest_rank, $total_conced, $half_conced, $total_sum, $half_sum, $turn, $time)
+    {
+        $this->db->where("match_id", $match_code);
+        $status = $this->db->update("t_score", array("match_name" => $match_name, "host_team" => $host, "guest_team" => $guest, "match_time" => $match_time, "league" => $league, "status" => $season, "total_score" => $total_score, "half_score" => $half_score, "host_rank" => $host_rank, "guest_rank" => $guest_rank, "total_conced" => $total_conced, "half_conced" => $half_conced, "total_sum" => $total_sum, "half_sum" => $half_sum, "turn" => $turn, "time" => $time));
+        if ($status && $this->db->affected_rows() > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    public function get_match_by_id($match_id)
+    {
+        $this->db->where("match_id", $match_id);
+        $query = $this->db->get("t_score");
+        return $query->row_array();
+    }
+    public function get_today_match()
+    {
+        $this->db->where(array("s.time > " => time(), "s.time<=" => time()+43200 ));
+        $this->db->order_by("s.time", "asc");
+        $this->db->from("t_score s");
+        $query = $this->db->join("league l", "l.league=s.league");
+        return $query->result_array();
+
+    }
 }
