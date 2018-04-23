@@ -84,18 +84,26 @@ class MatchModel extends MY_Model
             return false;
         }
     }
+
     public function get_match_by_id($match_id)
     {
         $this->db->where("match_id", $match_id);
         $query = $this->db->get("t_score");
         return $query->row_array();
     }
+    public function get_team_all_match($team_id)
+    {
+        $query = $this->db->query("SELECT * FROM t_score WHERE status = -1 and (host_team = {$team_id} OR guest_team = {$team_id}) ORDER BY `time` DESC ");
+        return $query->result_array();
+    }
+
     public function get_today_match()
     {
-        $this->db->where(array("s.time > " => time(), "s.time<=" => time()+43200 ));
+        $this->db->where(array("s.time > " => time()-12800, "s.time<=" => time() + 43200));
         $this->db->order_by("s.time", "asc");
         $this->db->from("t_score s");
-        $query = $this->db->join("league l", "l.league=s.league");
+        $this->db->join("league l", "l.league=s.league");
+        $query = $this->db->get();
         return $query->result_array();
 
     }

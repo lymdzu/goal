@@ -1,0 +1,202 @@
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <title>Proculus</title>
+
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+
+    <!--[if lt IE 9]>
+    <meta http-equiv="refresh" content="0;ie.html"/><![endif]-->
+    <link href="{{'static/bscss/bootstrap.min.css'|base_url}}" rel="stylesheet">
+    <link href="{{'static/bscss/font-awesome.css'|base_url}}?v=4.4.0" rel="stylesheet">
+    <link href="{{'static/bscss/style.min.css'|base_url}}?v=4.1.0" rel="stylesheet">
+    <script type="text/javascript" src="{{'static/bsjs/jquery.min.js'|base_url}}"></script>
+    <link href="{{'static/bscss/plugins/webuploader/webuploader.css'|base_url}}?" rel="stylesheet">
+    <link href="{{'static/bscss/webuploader-demo.min.css'|base_url}}?" rel="stylesheet">
+    <script type="text/javascript" src="{{'static/bsjs/plugins/webuploader/webuploader.min.js'|base_url}}"></script>
+    {{if $nav=="news"}}
+    <link href="{{'static/bsjs/plugins/wangedit/wangEditor.min.css'|base_url}}?" rel="stylesheet">
+    <script type="text/javascript" src="{{'static/bsjs/plugins/wangedit/wangEditor.min.js'|base_url}}"></script>
+    {{/if}}
+    {{if $page == "add_paper"}}
+    <script type="text/javascript" src="{{'static/bsjs/tag.js'|base_url}}"></script>
+    <script type="text/javascript" src="{{'static/bsjs/fileinput.min.js'|base_url}}"></script>
+    <link rel="stylesheet" type="text/css" href="{{'static/bscss/fileinput.min.css'|base_url}}"/>
+    <link rel="stylesheet" type="text/css" href="{{'static/bscss/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css'|base_url}}" />
+    <link rel="stylesheet" type="text/css" href="{{'static/bscss/tag.css'|base_url}}" />
+    {{/if}}
+</head>
+
+<body class="fixed-sidebar  gray-bg">
+<div id="wrapper">
+    <!--左侧导航开始-->
+    <nav class="navbar-default navbar-static-side" role="navigation">
+        <div class="nav-close"><i class="fa fa-times-circle"></i>
+        </div>
+        <div class="sidebar-collapse">
+            <ul class="nav" id="side-menu">
+                <li class="nav-header">
+                    <div class="dropdown profile-element">
+                        <span>
+                            <img alt="image" class="img-circle" src="{{'static/images/admin.png'|base_url}}"/>
+                        </span>
+                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                                <span class="clear">
+                               <span class="block m-t-xs"><strong class="font-bold">{{$smarty.session.admin_user}}</strong></span>
+                                <span class="text-muted text-xs block">super admin<b class="caret"></b></span>
+                                </span>
+                        </a>
+                        <ul class="dropdown-menu animated fadeInRight m-t-xs">
+                            <li>
+                                <a href="{{'passport/logout'|base_url}}">Sign Out</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="logo-element">P
+                    </div>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fa fa-user"></i> <span class="nav-label">User Profile</span> <span class="fa arrow"></span>
+                    </a>
+                    <ul class="nav nav-second-level">
+                        <li>
+                            <a href="{{'admin/index'|base_url}}" data-index="0"><i class="fa fa-users"></i>Users</a>
+                        </li>
+                    </ul>
+
+                </li>
+                <li>
+                    <a href="#"><i class="fa fa-upload"></i>
+                        <span class="nav-label">Upload</span><span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
+                        <li>
+                            <a href="{{'upload/doc'|base_url}}" data-index="0"><i class="fa fa-file-word-o"></i>Document</a>
+                        </li>
+                        <li>
+                            <a href="{{'upload/video'|base_url}}" data-index="1"><i class="fa fa-file-video-o"></i>Video</a>
+                        </li>
+                    </ul>
+                </li>
+                <li {{if $nav == "product"}}class="active"{{/if}}>
+                    <a href="#"><i class="fa fa-list"></i>
+                        <span class="nav-label">Product</span><span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
+                        <li {{if $page == "property"}}class="active"{{/if}}>
+                            <a href="{{'category/lists'|base_url}}" data-index="0"><i class="fa fa-shopping-cart"></i>Product Property</a>
+                        </li>
+                        <li {{if $page == "add_product"}}class="active"{{/if}}>
+                            <a href="{{'category/add_product'|base_url}}" data-index="1"><i class="fa fa-plus-square"></i>Add Product</a>
+                        </li>
+                        <li {{if $page == "product_list"}}class="active"{{/if}}>
+                            <a href="{{'category/product'|base_url}}" data-index="2"><i class="fa fa-cubes"></i>Product list</a>
+                        </li>
+                    </ul>
+                </li>
+                <li {{if $nav == "news"}}class="active"{{/if}}>
+                    <a href="#"><i class="fa fa-newspaper-o"></i>
+                        <span class="nav-label">Paper</span><span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
+                        <li {{if $page == "news"}}class="active"{{/if}}>
+                            <a href="{{'admin/news'|base_url}}" data-index="0"><i class="fa fa-list-alt"></i>News list</a>
+                        </li>
+                        <li {{if $page == "add_paper"}}class="active"{{/if}}>
+                            <a href="{{'admin/add_paper'|base_url}}" data-index="1"><i class="fa fa-edit"></i>Add News</a>
+                        </li>
+                    </ul>
+                </li>
+                <li {{if $nav == "comment"}}class="active"{{/if}}>
+                    <a href="#"><i class="fa fa-commenting"></i>
+                        <span class="nav-label">Comments</span><span class="fa arrow"></span>
+                    </a>
+                    <ul class="nav nav-second-level">
+                        <li {{if $page == "comment"}}class="active"{{/if}}>
+                            <a href="{{'admin/comments'|base_url}}" data-index="0"><i class="fa fa-commenting"></i>Comments list</a>
+                        </li>
+                    </ul>
+                </li>
+                <li {{if $nav == "contact"}}class="active"{{/if}}>
+                    <a href="#"><i class="fa fa-info-circle"></i>
+                        <span class="nav-label">Contact</span><span class="fa arrow"></span>
+                    </a>
+                    <ul class="nav nav-second-level">
+                        <li {{if $page == "contact"}}class="active"{{/if}}>
+                        <a href="{{'admin/contact_message'|base_url}}" data-index="0"><i class="fa fa-info-circle"></i>Contact list</a>
+                        </li>
+                    </ul>
+                </li>
+                <li {{if $nav == "subscribe"}}class="active"{{/if}}>
+                    <a href="#"><i class="fa fa-thumb-tack"></i>
+                        <span class="nav-label">Subscribe</span><span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
+                        <li {{if $page == "subscribe"}}class="active"{{/if}}>
+                        <a href="{{'admin/subscribe_list'|base_url}}" data-index="0"><i class="fa fa-thumb-tack"></i>Subscribe list</a>
+                        </li>
+                    </ul>
+                </li>
+                <li {{if $nav == "page"}}class="active"{{/if}}>
+                    <a href="#"><i class="fa fa-edit"></i>
+                        <span class="nav-label">Page Edit</span><span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
+                        <li {{if $page == "page"}}class="active"{{/if}}>
+                        <a href="{{'editer/faq'|base_url}}" data-index="0"><i class="fa fa-thumb-tack"></i>FAQ list</a>
+                        </li>
+                        <li {{if $page == "editdemo"}}class="active"{{/if}}>
+                        <a href="{{'editer/demo'|base_url}}" data-index="0"><i class="fa fa-thumb-tack"></i>DEMO Page</a>
+                        </li>
+                        <li {{if $page == "editorder"}}class="active"{{/if}}>
+                        <a href="{{'editer/order'|base_url}}" data-index="0"><i class="fa fa-thumb-tack"></i>Order Page</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!--左侧导航结束-->
+    <!--右侧部分开始-->
+    <div id="page-wrapper" class="gray-bg dashbard-1">
+        <div class="row border-bottom">
+            <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
+                <div class="navbar-header">
+                    <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i>
+                    </a>
+                    <!--<form role="search" class="navbar-form-custom" method="post" action="search_results.html">-->
+                        <!--<div class="form-group">-->
+                            <!--<input type="text" placeholder="请输入您需要查找的内容 …" class="form-control" name="top-search" id="top-search">-->
+                        <!--</div>-->
+                    <!--</form>-->
+                </div>
+            </nav>
+        </div>
+        <div class="row J_mainContent" id="content-main">
+                {{include $__PAGE__}}
+        </div>
+        <div class="footer fixed">
+            <div class="pull-right">&copy; 2014-2017
+                <a href="http://www.proculus.net/" target="_blank">PROCULUS</a>
+            </div>
+        </div>
+    </div>
+    <!--右侧部分结束-->
+    <!--右侧边栏开始-->
+    <div id="right-sidebar">
+    </div>
+    <!--右侧边栏结束-->
+</div>
+<script type="text/javascript" src="{{'static/bsjs/bootstrap.min.js'|base_url}}"></script>
+<script type="text/javascript" src="{{'static/bsjs/jquery.metisMenu.js'|base_url}}"></script>
+<script type="text/javascript" src="{{'static/bsjs/jquery.slimscroll.min.js'|base_url}}"></script>
+<script type="text/javascript" src="{{'static/js/plugins/layer/layer.min.js'|base_url}}"></script>
+<script type="text/javascript" src="{{'static/bsjs/hplus.min.js'|base_url}}"></script>
+<script type="text/javascript" src="{{'static/bsjs/contabs.min.js'|base_url}}"></script>
+<script type="text/javascript" src="{{'static/bsjs/pace.min.js'|base_url}}"></script>
+
+</body>
+</html>
